@@ -1,7 +1,7 @@
 from torchvision.datasets import VisionDataset
 
 from PIL import Image
-# change 2
+
 import os
 import os.path
 import sys
@@ -20,6 +20,22 @@ class Caltech(VisionDataset):
 
         self.split = split # This defines the split you are going to use
                            # (split files are called 'train.txt' and 'test.txt')
+        self.split += ".txt"
+        self.path = root + "/../" + self.split
+
+        index = 0
+        label_n = 0
+        for filename in os.listdir(self.path):
+            if filename[:(filename.find('/'))] != "BACKGROUND_Google":
+                if index == 0:
+                    label = filename[:(filename.find('/'))]
+                else:
+                    if label != filename[:(filename.find('/'))]:
+                        label = filename[:(filename.find('/'))]
+                        label_n += 1
+                self.set[index] = [pil_loader(root + filename), label_n]
+                index += 1
+        self.length = index+1
 
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
@@ -40,9 +56,9 @@ class Caltech(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         '''
 
-        image, label = ... # Provide a way to access image and label via index
-                           # Image should be a PIL Image
-                           # label can be int
+        image, label = self.set[index]  # Provide a way to access image and label via index
+                                        # Image should be a PIL Image
+                                        # label can be int
 
         # Applies preprocessing when accessing the image
         if self.transform is not None:
@@ -52,8 +68,10 @@ class Caltech(VisionDataset):
 
     def __len__(self):
         '''
-        The __len__ method returns the length of the dataset
-        It is mandatory, as this is used by several other components
+            The __len__ method returns the length of the dataset
+            It is mandatory, as this is used by several other components
         '''
-        length = ... # Provide a way to get the length (number of elements) of the dataset
+        length = self.length  # Provide a way to get the length (number of elements) of the dataset
         return length
+
+c = Caltech.__init__(Caltech, '.')
