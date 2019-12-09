@@ -27,7 +27,6 @@ class Caltech(VisionDataset):
         label_n = 0
         f = open(self.path, 'r')
         for filename in f:
-            print(filename)
             if filename[:(filename.find('/'))] != 'BACKGROUND_Google':
                 if index == 0:
                     label = filename[:(filename.find('/'))]
