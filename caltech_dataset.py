@@ -35,7 +35,7 @@ class Caltech(VisionDataset):
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
-                self.set[index] = [pil_loader(root + filename), label_n]
+                self.set[index] = [pil_loader(root + '/' + filename), label_n]
                 index += 1
         self.length = index+1
 
