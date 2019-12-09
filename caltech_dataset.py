@@ -25,10 +25,10 @@ class Caltech(VisionDataset):
 
         index = 0
         label_n = 0
-        f = open(self.path, 'rb')
+        f = open(self.path, 'r')
         for filename in f:
-            print(filename + '\n')
-            if filename[:(filename.find('/'))] != "BACKGROUND_Google":
+            print(filename)
+            if filename[:(filename.find('/'))] != 'BACKGROUND_Google':
                 if index == 0:
                     label = filename[:(filename.find('/'))]
                 else:
@@ -70,5 +70,6 @@ class Caltech(VisionDataset):
 
     def __len__(self):
         length = self.length  # Provide a way to get the length (number of elements) of the dataset
-        print(length)
-        return 5
+        return length
+
+
