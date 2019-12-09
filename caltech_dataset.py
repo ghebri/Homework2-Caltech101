@@ -70,4 +70,4 @@ class Caltech(VisionDataset):
     def __len__(self):
         length = self.length  # Provide a way to get the length (number of elements) of the dataset
         print(length)
-        return length
+        return self.length
