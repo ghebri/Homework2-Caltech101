@@ -73,5 +73,3 @@ class Caltech(VisionDataset):
         '''
         length = self.length  # Provide a way to get the length (number of elements) of the dataset
         return length
-
-c = Caltech.__init__(Caltech, '.')
