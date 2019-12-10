@@ -20,22 +20,21 @@ class Caltech(VisionDataset):
         self.split = split  # This defines the split you are going to use
                             # (split files are called 'train.txt' and 'test.txt')
         self.split += ".txt"
-        self.path = root + "/../" + self.split
+        path = root + "/../" + self.split
 
-        index = 0
+        self.length = 0
         label_n = 0
-        f = open(self.path, 'r')
+        f = open(path, 'r')
         for filename in f:
             if filename[:(filename.find('/'))] != 'BACKGROUND_Google':
-                if index == 0:
+                if self.length == 0:
                     label = filename[:(filename.find('/'))]
                 else:
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
-                self.set[index] = (pil_loader(root + '/' + filename.rstrip()), label_n)
-                index += 1
-        self.length = index+1
+                self.set.append(pil_loader(root + '/' + filename.rstrip()), label_n)
+                self.length += 1
 
     def __getitem__(self, index):
         image, label = self.set[index]  # Provide a way to access image and label via index
