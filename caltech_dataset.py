@@ -41,7 +41,6 @@ class Caltech(VisionDataset):
         image, label = self.set[index]  # Provide a way to access image and label via index
                                         # Image should be a PIL Image
                                         # label can be int
-
         # Applies preprocessing when accessing the image
         if self.transform is not None:
             image = self.transform(image)
