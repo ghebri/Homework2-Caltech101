@@ -33,11 +33,11 @@ class Caltech(VisionDataset):
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
-                self.set.append(pil_loader(root + '/' + filename.rstrip()), label_n)
+                self.set.append(pil_loader(root + '/' + filename.rstrip()) + ' ' + label_n)
                 self.length += 1
 
     def __getitem__(self, index):
-        image, label = self.set[index]  # Provide a way to access image and label via index
+        image, label = str(self.set[index]).split(' ')  # Provide a way to access image and label via index
                                         # Image should be a PIL Image
                                         # label can be int
         # Applies preprocessing when accessing the image
