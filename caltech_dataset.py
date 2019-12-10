@@ -16,7 +16,8 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
-        self.set = []
+        self.images = []
+        self.labels = []
         self.split = split  # This defines the split you are going to use
                             # (split files are called 'train.txt' and 'test.txt')
         self.split += ".txt"
@@ -33,11 +34,12 @@ class Caltech(VisionDataset):
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
-                self.set.append(pil_loader(root + '/' + filename.rstrip()) + ' ' + label_n)
+                self.images.append(pil_loader(root + '/' + filename.rstrip()))
+                self.labels.append(label_n)
                 self.length += 1
 
     def __getitem__(self, index):
-        image, label = str(self.set[index]).split(' ')  # Provide a way to access image and label via index
+        image, label = self.images[index], self.labels[index]  # Provide a way to access image and label via index
                                         # Image should be a PIL Image
                                         # label can be int
         # Applies preprocessing when accessing the image
