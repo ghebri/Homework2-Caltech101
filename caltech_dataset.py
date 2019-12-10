@@ -16,7 +16,7 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
-        self.set = None
+        self.set = []
         self.split = split  # This defines the split you are going to use
                             # (split files are called 'train.txt' and 'test.txt')
         self.split += ".txt"
@@ -33,7 +33,7 @@ class Caltech(VisionDataset):
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
-                self.set[index] = [pil_loader(root + '/' + filename.rstrip()), label_n]
+                self.set[index] = (pil_loader(root + '/' + filename.rstrip()), label_n)
                 index += 1
         self.length = index+1
 
