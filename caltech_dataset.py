@@ -17,23 +17,27 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
-
-        self.split = split # This defines the split you are going to use
-                           # (split files are called 'train.txt' and 'test.txt')
+        print('I\'m in')
+        self.split = split  # This defines the split you are going to use
+                            # (split files are called 'train.txt' and 'test.txt')
         self.split += ".txt"
         self.path = root + "/../" + self.split
 
         index = 0
         label_n = 0
+        print('I\'m opening the file')
         f = open(self.path, 'r')
+        print('I\'m beggining to read it')
         for filename in f:
             if filename[:(filename.find('/'))] != 'BACKGROUND_Google':
+                print('Found an image')
                 if index == 0:
                     label = filename[:(filename.find('/'))]
                 else:
                     if label != filename[:(filename.find('/'))]:
                         label = filename[:(filename.find('/'))]
                         label_n += 1
+                print('I\'m saving it')
                 self.set[index] = [pil_loader(root + '/' + filename), label_n]
                 index += 1
         self.length = index+1
