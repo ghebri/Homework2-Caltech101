@@ -7,6 +7,14 @@ import os.path
 import sys
 
 
+class Myclass():
+    def __init__(self, a=1):
+        self.a = a
+
+    def __getitem__(self):
+        return self.a
+
+
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
     with open(path, 'rb') as f:
@@ -17,6 +25,7 @@ def pil_loader(path):
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
+        self.set = None
         print('I\'m in')
         self.split = split  # This defines the split you are going to use
                             # (split files are called 'train.txt' and 'test.txt')
@@ -42,25 +51,7 @@ class Caltech(VisionDataset):
                 index += 1
         self.length = index+1
 
-        '''
-        - Here you should implement the logic for reading the splits files and accessing elements
-        - If the RAM size allows it, it is faster to store all data in memory
-        - PyTorch Dataset classes use indexes to read elements
-        - You should provide a way for the __getitem__ method to access the image-label pair
-          through the index
-        - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
-        '''
-
     def __getitem__(self, index):
-        '''
-        __getitem__ should access an element through its index
-        Args:
-            index (int): Index
-
-        Returns:
-            tuple: (sample, target) where target is class_index of the target class.
-        '''
-
         image, label = self.set[index]  # Provide a way to access image and label via index
                                         # Image should be a PIL Image
                                         # label can be int
@@ -74,5 +65,3 @@ class Caltech(VisionDataset):
     def __len__(self):
         length = self.length  # Provide a way to get the length (number of elements) of the dataset
         return length
-
-
